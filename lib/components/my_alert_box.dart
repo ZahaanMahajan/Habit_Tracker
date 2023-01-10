@@ -19,39 +19,56 @@ class MyAlertBox extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return AlertDialog(
+      backgroundColor: Color(0xFFEFEEEE),
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(10.0),
+      ),
       content: TextField(
         controller: controller,
         decoration: InputDecoration(
           hintText: hintText,
           enabledBorder: OutlineInputBorder(
+            borderSide: BorderSide(color: Color.fromARGB(255, 190, 190, 190)),
             borderRadius: BorderRadius.circular(24),
           ),
           focusedBorder: OutlineInputBorder(
+            borderSide: BorderSide(color: Color(0xFF292D32)),
             borderRadius: BorderRadius.circular(24),
           ),
         ),
       ),
       actions: [
-        MaterialButton(
-          onPressed: onCancel,
-          child: Text(
-            "Cancel",
-            style: TextStyle(
-              color: Colors.white,
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          children: [
+            MaterialButton(
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(30.0),
+              ),
+              onPressed: onCancel,
+              child: Text(
+                "Cancel",
+                style: TextStyle(
+                  color: Colors.black,
+                ),
+              ),
+              color: Color(0xFFEFEEEE),
             ),
-          ),
-          color: Colors.black,
-        ),
-        MaterialButton(
-          onPressed: onSave,
-          child: Text(
-            "Save",
-            style: TextStyle(
-              color: Colors.white,
+            MaterialButton(
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(30.0),
+              ),
+              onPressed: onSave,
+              child: Text(
+                "Save",
+                style: TextStyle(
+                  color: Colors.black,
+                ),
+              ),
+              color: Color(0xFFEFEEEE),
             ),
-          ),
-          color: Colors.black,
-        ),
+          ],
+        )
       ],
     );
   }

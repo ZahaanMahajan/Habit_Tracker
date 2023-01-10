@@ -1,11 +1,12 @@
 // ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables, non_constant_identifier_names, avoid_types_as_parameter_names
 
 import 'package:flutter/material.dart';
+import 'package:habit_tracker/components/month_summary.dart';
 import 'package:habit_tracker/components/my_fab.dart';
 import 'package:habit_tracker/components/my_alert_box.dart';
 import 'package:habit_tracker/data/habit_database.dart';
 import 'package:hive_flutter/adapters.dart';
-import 'components/habit_tile.dart';
+import '../components/habit_tile.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -115,21 +116,47 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.grey[300],
+      appBar: AppBar(
+        title: Text(
+          "Habit Tracker",
+          style: TextStyle(
+            color: Color(0xFF292D32),
+            fontWeight: FontWeight.bold,
+            fontSize: 25,
+          ),
+        ),
+        backgroundColor: Color(0xFFEFEEEE),
+        elevation: 0,
+        centerTitle: true,
+      ),
+      backgroundColor: Color(0xFFEFEEEE),
       floatingActionButton: MyFloatingActionButton(
         onPressed: createNewHabit,
       ),
-      body: ListView.builder(
-        itemCount: db.todaysHabitList.length,
-        itemBuilder: (context, index) {
-          return HabitTile(
-            habitName: db.todaysHabitList[index][0],
-            habitCompleted: db.todaysHabitList[index][1],
-            onChanged: (value) => checkBoxTapped(value, index),
-            deleteFunction: (context) => deleteHabit(index),
-            settingFunction: (context) => openHabitSettings(index),
-          );
-        },
+      body: ListView(
+        children: [
+          // monthly summary
+          MonthlySummary(
+            datasets: db.heatMapDataSet,
+            startDate: _myBox.get("START_DATE"),
+          ),
+
+          // list of habits
+          ListView.builder(
+            shrinkWrap: true,
+            physics: NeverScrollableScrollPhysics(),
+            itemCount: db.todaysHabitList.length,
+            itemBuilder: (context, index) {
+              return HabitTile(
+                habitName: db.todaysHabitList[index][0],
+                habitCompleted: db.todaysHabitList[index][1],
+                onChanged: (value) => checkBoxTapped(value, index),
+                deleteFunction: (context) => deleteHabit(index),
+                settingFunction: (context) => openHabitSettings(index),
+              );
+            },
+          ),
+        ],
       ),
     );
   }
