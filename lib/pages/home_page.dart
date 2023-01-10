@@ -133,28 +133,43 @@ class _HomePageState extends State<HomePage> {
       floatingActionButton: MyFloatingActionButton(
         onPressed: createNewHabit,
       ),
-      body: ListView(
+      body: Stack(
         children: [
-          // monthly summary
-          MonthlySummary(
-            datasets: db.heatMapDataSet,
-            startDate: _myBox.get("START_DATE"),
+          Center(
+            child: Text(
+              "No habits to track",
+              style: TextStyle(
+                fontSize: 20,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
           ),
+          ListView(
+            children: [
+              // monthly summary
+              MonthlySummary(
+                datasets: db.heatMapDataSet,
+                startDate: _myBox.get("START_DATE"),
+              ),
 
-          // list of habits
-          ListView.builder(
-            shrinkWrap: true,
-            physics: NeverScrollableScrollPhysics(),
-            itemCount: db.todaysHabitList.length,
-            itemBuilder: (context, index) {
-              return HabitTile(
-                habitName: db.todaysHabitList[index][0],
-                habitCompleted: db.todaysHabitList[index][1],
-                onChanged: (value) => checkBoxTapped(value, index),
-                deleteFunction: (context) => deleteHabit(index),
-                settingFunction: (context) => openHabitSettings(index),
-              );
-            },
+              Divider(),
+
+              // list of habits
+              ListView.builder(
+                shrinkWrap: true,
+                physics: NeverScrollableScrollPhysics(),
+                itemCount: db.todaysHabitList.length,
+                itemBuilder: (context, index) {
+                  return HabitTile(
+                    habitName: db.todaysHabitList[index][0],
+                    habitCompleted: db.todaysHabitList[index][1],
+                    onChanged: (value) => checkBoxTapped(value, index),
+                    deleteFunction: (context) => deleteHabit(index),
+                    settingFunction: (context) => openHabitSettings(index),
+                  );
+                },
+              ),
+            ],
           ),
         ],
       ),
