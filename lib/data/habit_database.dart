@@ -61,7 +61,7 @@ class HabitDataBase {
         : (countCompleted / todaysHabitList.length).toStringAsFixed(1);
 
     // put it in the database
-    _myBox.put('PERCENTAGE_SUMMARY_${todaysDateFormatted()}', percentage);
+    _myBox.put("PERCENTAGE_SUMMARY_${todaysDateFormatted()}", percentage);
   }
 
   void loadHeatMap() {
@@ -72,7 +72,7 @@ class HabitDataBase {
 
     // go from start date to today and add each percentage to the dataset
     // "PERCENTAGE_SUMMARY_yyyymmdd" will be the key in the database
-    for (var i = 0; i < daysInBetween; i++) {
+    for (int i = 0; i <= daysInBetween; i++) {
       String yyyymmdd = convertDateTimeToString(
         startDate.add(Duration(days: i)),
       );

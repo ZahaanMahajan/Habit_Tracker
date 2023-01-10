@@ -2,7 +2,7 @@
 
 import 'package:flutter/material.dart';
 
-class MyAlertBox extends StatelessWidget {
+class MyAlertBox extends StatefulWidget {
   MyAlertBox({
     super.key,
     required this.controller,
@@ -17,6 +17,11 @@ class MyAlertBox extends StatelessWidget {
   final String hintText;
 
   @override
+  State<MyAlertBox> createState() => _MyAlertBoxState();
+}
+
+class _MyAlertBoxState extends State<MyAlertBox> {
+  @override
   Widget build(BuildContext context) {
     return AlertDialog(
       backgroundColor: Color(0xFFEFEEEE),
@@ -24,9 +29,9 @@ class MyAlertBox extends StatelessWidget {
         borderRadius: BorderRadius.circular(10.0),
       ),
       content: TextField(
-        controller: controller,
+        controller: widget.controller,
         decoration: InputDecoration(
-          hintText: hintText,
+          hintText: widget.hintText,
           enabledBorder: OutlineInputBorder(
             borderSide: BorderSide(color: Color.fromARGB(255, 190, 190, 190)),
             borderRadius: BorderRadius.circular(24),
@@ -45,7 +50,7 @@ class MyAlertBox extends StatelessWidget {
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(30.0),
               ),
-              onPressed: onCancel,
+              onPressed: widget.onCancel,
               child: Text(
                 "Cancel",
                 style: TextStyle(
@@ -58,7 +63,15 @@ class MyAlertBox extends StatelessWidget {
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(30.0),
               ),
-              onPressed: onSave,
+              onPressed: () {
+                setState(() {
+                  if (widget.controller.value.text.isNotEmpty) {
+                    widget.onSave();
+                  } else {
+                    return null;
+                  }
+                });
+              },
               child: Text(
                 "Save",
                 style: TextStyle(

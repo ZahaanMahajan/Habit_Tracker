@@ -47,6 +47,13 @@ class _HomePageState extends State<HomePage> {
   }
 
   final _newHabitNameController = TextEditingController();
+
+  @override
+  void dispose() {
+    _newHabitNameController.dispose();
+    super.dispose();
+  }
+
   void createNewHabit() {
     showDialog(
       context: context,
@@ -135,15 +142,6 @@ class _HomePageState extends State<HomePage> {
       ),
       body: Stack(
         children: [
-          Center(
-            child: Text(
-              "No habits to track",
-              style: TextStyle(
-                fontSize: 20,
-                fontWeight: FontWeight.bold,
-              ),
-            ),
-          ),
           ListView(
             children: [
               // monthly summary
